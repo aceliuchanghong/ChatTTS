@@ -7,7 +7,10 @@ import gradio as gr
 import numpy as np
 
 import ChatTTS
-
+import torch._dynamo
+torch._dynamo.config.suppress_errors = True
+torch._dynamo.config.cache_size_limit = 64
+torch.set_float32_matmul_precision('high')
 
 def generate_seed():
     new_seed = random.randint(1, 100000000)
@@ -107,7 +110,7 @@ def main():
         print('local model path:', args.local_path)
         chat.load_models('local', local_path=args.local_path)
 
-    demo.launch(server_name=args.server_name, server_port=args.server_port, inbrowser=True)
+    demo.launch(server_name=args.server_name, server_port=args.server_port, inbrowser=False)
 
 
 if __name__ == '__main__':
