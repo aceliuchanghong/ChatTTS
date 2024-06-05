@@ -36,13 +36,15 @@ def generate_audio(text, temperature, top_P, top_K, audio_seed_input, text_seed_
                           skip_refine_text=False,
                           refine_text_only=True,
                           params_refine_text=params_refine_text,
-                          params_infer_code=params_infer_code
+                          params_infer_code=params_infer_code,
+                          do_text_normalization=False
                           )
     
     wav = chat.infer(text, 
                      skip_refine_text=True, 
                      params_refine_text=params_refine_text, 
-                     params_infer_code=params_infer_code
+                     params_infer_code=params_infer_code,
+                     do_text_normalization=False
                      )
     
     audio_data = np.array(wav[0]).flatten()
@@ -110,6 +112,6 @@ def main():
 
 if __name__ == '__main__':
     """
-    python webui.py --server_port=8080 --local_path /mnt/data/llch/chatTTS_model
+    python webui.py --server_port=8082 --local_path /mnt/data/llch/chatTTS
     """
     main()
